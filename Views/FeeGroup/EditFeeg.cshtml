@@ -1,0 +1,74 @@
+﻿@model St.ColumbusERP.Models.FeeGroup
+
+@{
+    ViewData["Title"] = "EditFeeg";
+}
+
+<h1>EditFeeg</h1>
+
+<h4>FeeGroup</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+ 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GroupId" class="control-label"></label>
+                <input asp-for="GroupId" class="form-control"  id="id"/>
+                <span asp-validation-for="GroupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupName" class="control-label"></label>
+                <input asp-for="GroupName" class="form-control" id="gn"/>
+                <span asp-validation-for="GroupName" class="text-danger"></span> 
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control"   id="des" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FromClass" class="control-label"></label>
+                <input asp-for="FromClass" class="form-control" id="fc"/>
+                <span asp-validation-for="FromClass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToClass" class="control-label"></label>
+                <input asp-for="ToClass" class="form-control" id="tc"/>
+                <span asp-validation-for="ToClass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" id="upt"/>
+            </div>
+ 
+    </div>
+</div>
+
+<div>
+    <a asp-action="FeeGroupList">Back to List</a>
+</div>
+
+
+@section Scripts {
+    <script>
+   $(document).ready(function(){
+       $("#upt").click(function(){
+           let param ={
+            GroupId : $("#id").val(),  
+           GroupName: $("#gn").val(),
+           Description : $("#des").val(),
+           FromClass: $("#fc").val(),
+           ToClass:$("#tc").val(),
+           };
+                $.post('/FeeGroup/Addfeeg',param).done(function(result){
+                    alert("FEE GROUP UPDATED");
+                    window.location.href="/FeeGroup/FeeGroupList"
+
+                })
+                .fail(function(){
+                    alert("CANNOT UPDATED");
+                })
+       })
+   })
+    </script>
+}

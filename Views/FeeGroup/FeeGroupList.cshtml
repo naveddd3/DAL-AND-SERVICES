@@ -1,0 +1,116 @@
+﻿@using St.ColumbusERP.Models;
+@model IEnumerable<FeeGroup>
+
+<div id="wrapper">
+
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+
+
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">FEE GROUPS</h6>
+                <a href="/FeeGroup/FeegForm">
+                    <span class="btn btn-info"><i class="fa fa-edit" aria-hidden="true"></i>ADD FEE GROUP</span>
+                </a>
+
+
+
+            </div>
+
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead style="color:black">
+                            <tr>
+                                <th>GroupID</th>
+                                <th>GroupName</th>
+                                <th>Description</th>
+                                <th>FromCLass</th>
+                                <th>TO Class</th>
+                                <th>ACTION</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody style="color:black">
+                            @if (Model != null && Model.Any())
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr data-FeeGroup-Id="@item.GroupId">
+                                        <td>
+                                            @item.GroupId
+                                        </td>
+                                        <td>@item.GroupName</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.FromClass</td>
+                                        <td>@item.ToClass</td>
+                                        <td>
+
+
+                                            <span class="btn btn-primary" onclick="EditFeeg(@item.GroupId)"><i class="fa fa-edit" aria-hidden="true"></i></span>
+                                            <span class="btn btn-danger" onclick="DeleteFeeg(@item.GroupId)"><i class="fa fa-trash" aria-hidden="true"></i></span>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/datatables-demo.js"></script>
+
+@section Scripts{
+    <script>
+
+        function EditFeeg(GroupId) {
+            var url = '/FeeGroup/EditFeeg?GroupId=' + GroupId;
+            window.location.href = url;
+        }
+        function DeleteFeeg(GroupId) {
+            //var url = '/Sessionmaster/DeleteSession?id='+id;
+            //window.location.href=url;
+            $.post('/FeeGroup/DeleteFeeg', { GroupId: GroupId })
+                .done(function (i) {
+                    alert(i);
+                    window.location.href = "/FeeGroup/FeeGroupList";
+                })
+                .fail(function () {
+                    alert(i);
+                })
+        }
+
+    </script>
+ }
